@@ -1,0 +1,133 @@
+1. Database Schema for a customer-sale scenario
+
+
+a) Create the tables with the appropriate integrity constraints
+
+CREATE DATABASE PRACTICAL1;
+USE PRACTICAL1;
+ CREATE TABLE Customer (
+        cust_id INT PRIMARY KEY,
+        cust_name VARCHAR(255)
+     );
+
+
+ 
+ CREATE TABLE Item (
+         item_id INT PRIMARY KEY,
+        item_name VARCHAR(255),
+         price INT
+     );
+
+
+
+CREATE TABLE Sale (
+        bill_no INT PRIMARY KEY,
+         bill_date DATE,
+         cust_id INT,
+         item_id INT,
+         qty_sold INT,
+        FOREIGN KEY (cust_id) REFERENCES Customer(cust_id),
+         FOREIGN KEY (item_id) REFERENCES Item(item_id)
+     );
+     
+
+b) Insert around 10 records in each of the tables
+
+INSERT INTO Customer (cust_id, cust_name) VALUES
+(1, 'John'),
+(2, 'Alice'),
+(3, 'Bob'),
+(4, 'Emma'),
+(5, 'Mike'),
+(6, 'Sara'),
+(7, 'David'),
+(8, 'Lisa'),
+(9, 'Emily'),
+(10, 'Tom');
+
+
+INSERT INTO Item (item_id, item_name, price) VALUES
+(1, 'Phone', 500),
+(2, 'Laptop', 1000),
+(3, 'Tablet', 300),
+(4, 'Smartwatch', 200),
+(5, 'Headphones', 150),
+(6, 'Camera', 700),
+(7, 'TV', 1200),
+(8, 'Speaker', 250),
+(9, 'Mouse', 20),
+(10, 'Keyboard', 30);
+
+
+INSERT INTO Sale (bill_no, bill_date, cust_id, item_id, qty_sold) VALUES
+(1, '2024-04-30', 1, 2, 1),
+(2, '2024-04-30', 3, 4, 2),
+(3, '2024-04-30', 5, 7, 1),
+(4, '2024-04-30', 2, 1, 1),
+(5, '2024-04-30', 4, 3, 3),
+(6, '2024-04-30', 6, 5, 2),
+(7, '2024-04-30', 8, 9, 1),
+(8, '2024-04-30', 10, 10, 1),
+(9, '2024-04-30', 1, 3, 2),
+(10, '2024-04-30', 3, 7, 1);
+
+
+c) List all the bills for the current date with the customer names and item number
+
+SELECT s.bill_no, s.bill_date, c.cust_name, i.item_id
+FROM Sale s
+JOIN Customer c ON s.cust_id = c.cust_id
+JOIN Item i ON s.item_id = i.item_id
+WHERE s.bill_date = CURDATE();
+
+
+d) List the total Bill details with the quantity sold, price of the item and the final amount
+
+SELECT s.bill_no, s.qty_sold, i.price, s.qty_sold * i.price AS amount
+FROM Sale s
+JOIN Item i ON s.item_id = i.item_id;
+
+
+e) List the details of the customer who have bought a product which has a price>200
+
+SELECT DISTINCT c.*
+FROM Customer c
+JOIN Sale s ON c.cust_id = s.cust_id
+JOIN Item i ON s.item_id = i.item_id
+WHERE i.price > 200;
+
+
+f) Give a count of how many products have been bought by each customer
+
+SELECT c.cust_id, c.cust_name, COUNT(s.item_id) AS total_products_bought
+FROM Customer c
+LEFT JOIN Sale s ON c.cust_id = s.cust_id
+GROUP BY c.cust_id, c.cust_name;
+
+
+
+g) Give a list of products bought by a customer having cust_id as 5
+
+SELECT i.*
+FROM Item i
+JOIN Sale s ON i.item_id = s.item_id
+WHERE s.cust_id = 5;
+
+
+
+h) List the item details which are sold as of today
+
+SELECT DISTINCT i.*
+FROM Item i
+JOIN Sale s ON i.item_id = s.item_id
+WHERE s.bill_date = CURDATE();
+
+
+i) Create a view which lists out the bill_no, bill_date, cust_id, item_id, price, qty_sold, amount
+
+CREATE VIEW BillDetails AS
+SELECT s.bill_no, s.bill_date, s.cust_id, s.item_id, i.price, s.qty_sold, s.qty_sold * i.price AS amount
+FROM Sale s
+JOIN Item i ON s.item_id = i.item_id;
+
+

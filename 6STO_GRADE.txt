@@ -1,0 +1,50 @@
+-- Create table to store student details
+CREATE TABLE Student (
+    roll_no INT PRIMARY KEY,
+    name VARCHAR(50),
+    subject1 INT,
+    subject2 INT,
+    subject3 INT,
+    subject4 INT,
+    subject5 INT
+);
+
+-- Insert sample data into the Student table
+INSERT INTO Student (roll_no, name, subject1, subject2, subject3, subject4, subject5) 
+VALUES 
+(1, 'John', 85, 90, 78, 92, 88),
+(2, 'Emma', 76, 88, 91, 82, 79),
+(3, 'Michael', 92, 85, 79, 94, 87);
+
+-- Create a stored function to calculate the grade based on the roll number
+DELIMITER $$
+CREATE FUNCTION CalculateGrade(student_roll_no INT) 
+RETURNS CHAR(1)
+BEGIN
+    DECLARE avg_marks DECIMAL(5,2);
+    DECLARE grade CHAR(1);
+
+    -- Calculate average marks
+    SELECT AVG((subject1 + subject2 + subject3 + subject4 + subject5) / 5) INTO avg_marks 
+    FROM Student 
+    WHERE roll_no = student_roll_no;
+
+    -- Assign grade based on average marks
+    IF avg_marks >= 90 THEN
+        SET grade = 'A';
+    ELSEIF avg_marks >= 80 THEN
+        SET grade = 'B';
+    ELSEIF avg_marks >= 70 THEN
+        SET grade = 'C';
+    ELSEIF avg_marks >= 60 THEN
+        SET grade = 'D';
+    ELSE
+        SET grade = 'F';
+    END IF;
+
+    RETURN grade;
+END$$
+DELIMITER ;
+
+-- Example usage of the function to calculate grade for a specific student
+SELECT CalculateGrade(1) AS Grade_for_John;

@@ -1,0 +1,124 @@
+5. Database Schema for a student-Lab scenario
+
+-- a) Create tables with appropriate integrity constraints
+CREATE TABLE Student (
+    stud_no INTEGER PRIMARY KEY,
+    stud_name VARCHAR(255),
+    class VARCHAR(255)
+);
+
+CREATE TABLE Class (
+    class VARCHAR(255) PRIMARY KEY,
+    descrip VARCHAR(255)
+);
+
+CREATE TABLE Lab (
+    mach_no INTEGER,
+    Lab_no INTEGER,
+    description VARCHAR(255),
+    PRIMARY KEY (mach_no, Lab_no)
+);
+
+CREATE TABLE Allotment (
+    Stud_no INTEGER,
+    mach_no INTEGER,
+    dayofweek VARCHAR(255),
+    FOREIGN KEY (Stud_no) REFERENCES Student(stud_no),
+    FOREIGN KEY (mach_no) REFERENCES Lab(mach_no)
+);
+
+-- b) Insert around 10 records in each table
+INSERT INTO Student VALUES
+(1, 'John Doe', 'CSIT'),
+(2, 'Jane Smith', 'Economics'),
+(3, 'Alice Johnson', 'Biology'),
+(4, 'Bob Brown', 'CSIT'),
+(5, 'Emily Davis', 'Physics'),
+(6, 'Michael Wilson', 'CSIT'),
+(7, 'Sarah Lee', 'Mathematics'),
+(8, 'David Miller', 'CSIT'),
+(9, 'Olivia Martinez', 'Chemistry'),
+(10, 'James Taylor', 'CSIT');
+
+INSERT INTO Class VALUES
+('CSIT', 'Computer Science and Information Technology'),
+('Economics', 'Study of economy and markets'),
+('Biology', 'Study of living organisms'),
+('Physics', 'Study of matter and energy'),
+('Mathematics', 'Study of numbers and shapes'),
+('Chemistry', 'Study of matter and its properties');
+
+INSERT INTO Lab VALUES
+(1, 101, 'Lab for Programming'),
+(2, 102, 'Lab for Biology Experiments'),
+(3, 103, 'Lab for Physics Simulations'),
+(4, 104, 'Lab for Chemistry Reactions'),
+(5, 105, 'Lab for Data Analysis'),
+(6, 106, 'Lab for Network Security'),
+(7, 107, 'Lab for Robotics'),
+(8, 108, 'Lab for Web Development'),
+(9, 109, 'Lab for AI Research'),
+(10, 110, 'Lab for Electronics');
+
+INSERT INTO Allotment VALUES
+(1, 1, 'Monday'),
+(2, 3, 'Tuesday'),
+(3, 2, 'Wednesday'),
+(4, 4, 'Thursday'),
+(5, 5, 'Friday'),
+(6, 6, 'Monday'),
+(7, 7, 'Tuesday'),
+(8, 8, 'Wednesday'),
+(9, 9, 'Thursday'),
+(10, 10, 'Friday');
+
+-- c) List all machine allotments with student names, lab and machine numbers
+SELECT s.stud_name, l.Lab_no, a.mach_no
+FROM Student s
+JOIN Allotment a ON s.stud_no = a.Stud_no
+JOIN Lab l ON a.mach_no = l.mach_no;
+
+-- d) List total number of lab allotments day wise
+SELECT dayofweek, COUNT(*) AS total_lab_allotments
+FROM Allotment
+GROUP BY dayofweek;
+
+-- e) Count of machines allocated to the 'CSIT' class
+SELECT COUNT(*) AS machines_allocated_to_CSIT
+FROM Allotment a
+JOIN Student s ON a.Stud_no = s.stud_no
+WHERE s.class = 'CSIT';
+
+-- f) Machine allotment details of stud_no 5 with personal and class details
+SELECT s.stud_no, s.stud_name, s.class, a.mach_no, a.dayofweek
+FROM Student s
+JOIN Allotment a ON s.stud_no = a.Stud_no
+WHERE s.stud_no = 5;
+
+-- g) Count of machines allocated in Lab_no 1 for Monday
+SELECT COUNT(*) AS machines_allocated_in_lab1_on_monday
+FROM Allotment
+WHERE mach_no IN (SELECT mach_no FROM Lab WHERE Lab_no = 1) AND dayofweek = 'Monday';
+
+-- h) Count of students class wise who have allocated machines in the labs
+SELECT s.class, COUNT(DISTINCT s.stud_no) AS students_with_machine_allocation
+FROM Student s
+JOIN Allotment a ON s.stud_no = a.Stud_no
+GROUP BY s.class;
+
+
+-- i) Create a view listing stud_no, stud_name, mach_no, lab_no, dayofweek
+CREATE VIEW StudentMachineAllotments AS
+SELECT s.stud_no, s.stud_name, a.mach_no, l.Lab_no, a.dayofweek
+FROM Student s
+JOIN Allotment a ON s.stud_no = a.Stud_no
+JOIN Lab l ON a.mach_no = l.mach_no;
+
+-- j) Create a view listing machine allotment details for Thursday
+CREATE VIEW ThursdayMachineAllotments AS
+SELECT s.stud_name, l.Lab_no, a.mach_no
+FROM Student s
+JOIN Allotment a ON s.stud_no = a.Stud_no
+JOIN Lab l ON a.mach_no = l.mach_no
+WHERE a.dayofweek = 'Thursday';
+
