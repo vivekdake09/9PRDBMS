@@ -16,6 +16,10 @@ h) List the details for an employee_id=5
 i) Create a view which lists out the emp_name, department, basic, dedeuctions, netsalary
 j) Create a view which lists the emp_name and his netsalary
 
+
+CREATE DATABASE PRACTICAL3;
+USE PRACTICAL3;
+
 a) Create the tables with the appropriate integrity constraints
 CREATE TABLE employee (
     emp_id INTEGER PRIMARY KEY,
