@@ -1,0 +1,103 @@
+14. Consider following database:
+Student(Stud_no : integer, Stud_name: string)
+Membership(Mem_no: integer, Stud_no: integer)
+Book(book_no: integer, book_name:string, author: string)
+Iss_rec(iss_no:integer, iss_date: date, Mem_no: integer, book_no: integer)
+Write a trigger to update quantity of book if that book is issued to student.
+
+
+CREATE TABLE Student (
+    Stud_no INTEGER PRIMARY KEY,
+    Stud_name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Membership (
+    Mem_no INTEGER PRIMARY KEY,
+    Stud_no INTEGER,
+    FOREIGN KEY (Stud_no) REFERENCES Student(Stud_no)
+);
+
+CREATE TABLE Book (
+    book_no INTEGER PRIMARY KEY,
+    book_name VARCHAR(100) NOT NULL,
+    author VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Iss_rec (
+    iss_no INTEGER PRIMARY KEY,
+    iss_date DATE NOT NULL,
+    Mem_no INTEGER,
+    book_no INTEGER,
+    FOREIGN KEY (Mem_no) REFERENCES Membership(Mem_no),
+    FOREIGN KEY (book_no) REFERENCES Book(book_no)
+);
+
+
+-- Inserting records into Student table
+INSERT INTO Student (Stud_no, Stud_name) VALUES
+(1, 'John Doe'),
+(2, 'Jane Smith'),
+(3, 'Michael Johnson'),
+(4, 'Emily Brown'),
+(5, 'David Wilson'),
+(6, 'Sophia Martinez'),
+(7, 'James Lee'),
+(8, 'Olivia Garcia'),
+(9, 'William Rodriguez'),
+(10, 'Emma Martinez');
+
+-- Inserting records into Membership table
+INSERT INTO Membership (Mem_no, Stud_no) VALUES
+(101, 1),
+(102, 2),
+(103, 3),
+(104, 4),
+(105, 5),
+(106, 6),
+(107, 7),
+(108, 8),
+(109, 9),
+(110, 10);
+
+-- Inserting records into Book table
+INSERT INTO Book (book_no, book_name, author) VALUES
+(201, 'To Kill a Mockingbird', 'Harper Lee'),
+(202, '1984', 'George Orwell'),
+(203, 'Pride and Prejudice', 'Jane Austen'),
+(204, 'The Great Gatsby', 'F. Scott Fitzgerald'),
+(205, 'The Catcher in the Rye', 'J.D. Salinger'),
+(206, 'Animal Farm', 'George Orwell'),
+(207, 'Lord of the Flies', 'William Golding'),
+(208, 'Brave New World', 'Aldous Huxley'),
+(209, 'The Hobbit', 'J.R.R. Tolkien'),
+(210, 'To Kill a Mockingbird', 'Harper Lee');
+
+-- Inserting records into Iss_rec table
+INSERT INTO Iss_rec (iss_no, iss_date, Mem_no, book_no) VALUES
+(301, '2024-04-01', 101, 201),
+(302, '2024-04-03', 102, 202),
+(303, '2024-04-05', 103, 203),
+(304, '2024-04-07', 104, 204),
+(305, '2024-04-09', 105, 205),
+(306, '2024-04-11', 106, 206),
+(307, '2024-04-13', 107, 207),
+(308, '2024-04-15', 108, 208),
+(309, '2024-04-17', 109, 209),
+(310, '2024-04-19', 110, 210);
+
+
+CREATE OR REPLACE FUNCTION update_book_quantity()
+RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE Book
+    SET quantity = quantity - 1
+    WHERE book_no = NEW.book_no;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER book_issued_trigger
+AFTER INSERT ON Iss_rec
+FOR EACH ROW
+EXECUTE FUNCTION update_book_quantity();
+
