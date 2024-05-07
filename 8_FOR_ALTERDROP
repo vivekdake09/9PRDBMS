@@ -2,6 +2,12 @@
 8. Design and implement a database with primary key and foreign key constraints. Perform:
 a) Alter table with add and modify b) Drop table
 
+
+
+
+CREATE DATABASE PRACTICAL8;
+USE PRACTICAL8;
+
 -- Create Authors table
 CREATE TABLE Authors (
     AuthorID INT PRIMARY KEY,
