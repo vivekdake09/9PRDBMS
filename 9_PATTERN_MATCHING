@@ -1,3 +1,8 @@
+/*Problem tatement:9. Perform following SQL queries on the database:
+• Pattern matching
+• Arithmetic operations and built in functions 
+*/
+
 CREATE DATABASE COLLEGE;
 USE COLLEGE;
 CREATE TABLE STUDENT(ROLL_NO INT , NAME VARCHAR(20) , MARKS INT);
