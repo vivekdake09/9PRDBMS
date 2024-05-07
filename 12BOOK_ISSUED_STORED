@@ -1,4 +1,8 @@
 -- Create tables with appropriate integrity constraints
+
+
+CREATE DATABASE PRACTICAL12;
+USE PRACTICAL12;
 CREATE TABLE Student (
     Stud_no INTEGER PRIMARY KEY,
     Stud_name VARCHAR(100) NOT NULL
