@@ -1,5 +1,9 @@
 7. Design and implement a database using DDL statements and apply normalization on them.
 
+
+CREATE DATABASE PRACTICAL7;
+USE PRACTICAL7;
+
 CREATE TABLE Books (
     ISBN VARCHAR(20) PRIMARY KEY,
     Title VARCHAR(100),
