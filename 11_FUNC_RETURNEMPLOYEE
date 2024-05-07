@@ -1,6 +1,9 @@
 11. Consider the following database:
 Write a function which will return no. of employees working in department, if department number is given as argument.
 
+
+CREATE DATABASE PRACTICAL11;
+USE PRACTICAL11;
 -- Create Employee table
 CREATE TABLE Employee (
     fname VARCHAR(50),
