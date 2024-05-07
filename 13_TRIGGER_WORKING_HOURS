@@ -2,7 +2,8 @@
 Write a trigger that will check whether the working hours of any employee are less than zero and
 if it less than zero then working hours should be updated to zero.
 
-
+CREATE DATABASE PRACTICAL13;
+USE PRACTICAL13;
 -- Create Employee table
 CREATE TABLE Employee (
     fname VARCHAR(50),
