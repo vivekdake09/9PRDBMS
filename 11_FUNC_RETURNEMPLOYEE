@@ -1,0 +1,118 @@
+11. Consider the following database:
+Write a function which will return no. of employees working in department, if department number is given as argument.
+
+-- Create Employee table
+CREATE TABLE Employee (
+    fname VARCHAR(50),
+    minit CHAR(1),
+    lname VARCHAR(50),
+    ssn CHAR(9) PRIMARY KEY,
+    bdate DATE,
+    address VARCHAR(100),
+    sex CHAR(1),
+    salary DECIMAL(10,2),
+    super_ssn CHAR(9),
+    dno INT
+);
+
+-- Insert sample data into Employee table
+INSERT INTO Employee (fname, minit, lname, ssn, bdate, address, sex, salary, super_ssn, dno)
+VALUES 
+('John', 'D', 'Doe', '123456789', '1990-05-10', '123 Main St, Anytown, USA', 'M', 50000.00, NULL, 1),
+('Jane', 'M', 'Smith', '234567890', '1991-08-15', '456 Elm St, Othertown, USA', 'F', 60000.00, '123456789', 1),
+('Alice', 'A', 'Johnson', '345678901', '1988-03-20', '789 Oak St, Anycity, USA', 'F', 55000.00, '123456789', 2),
+('Bob', 'B', 'Brown', '456789012', '1993-12-25', '321 Pine St, Othercity, USA', 'M', 52000.00, '234567890', 2);
+
+-- Create Department table
+CREATE TABLE Department (
+    dname VARCHAR(50),
+    dnumber INT PRIMARY KEY,
+    mgr_ssn CHAR(9),
+    mgrstartdate DATE
+);
+
+-- Insert sample data into Department table
+INSERT INTO Department (dname, dnumber, mgr_ssn, mgrstartdate)
+VALUES 
+('HR', 1, '123456789', '2020-01-01'),
+('Finance', 2, '234567890', '2019-06-01');
+
+-- Create Department Locations table
+CREATE TABLE DeptLocations (
+    dnumber INT,
+    dlocation VARCHAR(100),
+    PRIMARY KEY (dnumber, dlocation)
+);
+
+-- Insert sample data into DeptLocations table
+INSERT INTO DeptLocations (dnumber, dlocation)
+VALUES 
+(1, 'Building A'),
+(2, 'Building B');
+
+-- Create Project table
+CREATE TABLE Project (
+    pname VARCHAR(50),
+    pnumber INT PRIMARY KEY,
+    plocation VARCHAR(100),
+    dnum INT
+);
+
+-- Insert sample data into Project table
+INSERT INTO Project (pname, pnumber, plocation, dnum)
+VALUES 
+('Project 1', 1, 'New York', 1),
+('Project 2', 2, 'Los Angeles', 2);
+
+-- Create WorksOn table
+CREATE TABLE WorksOn (
+    essn CHAR(9),
+    pno INT,
+    hours DECIMAL(5,2),
+    PRIMARY KEY (essn, pno)
+);
+
+-- Insert sample data into WorksOn table
+INSERT INTO WorksOn (essn, pno, hours)
+VALUES 
+('123456789', 1, 40),
+('234567890', 2, 35),
+('345678901', 1, 45),
+('456789012', 2, 30);
+
+-- Create Dependent table
+CREATE TABLE Dependent (
+    essn CHAR(9),
+    dependent_name VARCHAR(50),
+    sex CHAR(1),
+    bdate DATE,
+    relationship VARCHAR(50),
+    PRIMARY KEY (essn, dependent_name)
+);
+
+-- Insert sample data into Dependent table
+INSERT INTO Dependent (essn, dependent_name, sex, bdate, relationship)
+VALUES 
+('123456789', 'Alice Doe', 'F', '2015-02-01', 'Child'),
+('234567890', 'Bob Smith', 'M', '2018-07-10', 'Child');
+
+
+
+-- Function to get the number of employees working in a department
+DELIMITER //
+CREATE FUNCTION GetEmployeesInDepartment(department_number INT)
+RETURNS INT
+BEGIN
+    DECLARE employee_count INT;
+    
+    SELECT COUNT(*) INTO employee_count
+    FROM Employee
+    WHERE dno = department_number;
+    
+    RETURN employee_count;
+END//
+DELIMITER ;
+
+
+SELECT GetEmployeesInDepartment(1);
+
