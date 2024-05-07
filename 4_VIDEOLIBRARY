@@ -15,6 +15,10 @@ h) List the cassettes issues for today
 i) Create a view which lists outs the iss_no, iss_date, cust_name, cass_name
 j) Create a view which lists issues-date wise for the last one week
 
+
+CREATE DATABASE PRACTICAL4;
+USE PRACTICAL4;
+
 a) Create the tables with the appropriate integrity constraints
 CREATE TABLE Customer (
     cust_no INTEGER PRIMARY KEY,
