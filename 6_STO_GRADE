@@ -1,7 +1,8 @@
 6. Create table to store student details like roll no, name, marks of 5 different subjects. Write
 stored function which will take student roll no as input and will calculate grade of that student.
 
-
+CREATE DATABASE PRACTICAL6;
+USE PRACTICAL6;
 -- Create table to store student details
 CREATE TABLE Student (
     roll_no INT PRIMARY KEY,
