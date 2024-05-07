@@ -14,6 +14,10 @@ f) Give a list of books taken by student with stud_no as 5
 g) Create a view which lists out the iss_no, iss _date, stud_name, book name
 h) Create a view which lists the daily issues-date wise for the last one week
 a) Insert around 10 records in each of the tables
+
+
+CREATE DATABASE PRACTICAL2;
+USE PRACTICAL2;
 CREATE TABLE Student (
     Stud_no INTEGER PRIMARY KEY,
     Stud_name VARCHAR(50) NOT NULL
