@@ -2,6 +2,10 @@
 books and store ISBN,Title and reduced price in new table
 
 
+
+
+CREATE DATABASE PRAC17;
+USE PRAC17;
 DELIMITER //
 
 CREATE PROCEDURE ReducePriceOfFirstEditionBooks()
