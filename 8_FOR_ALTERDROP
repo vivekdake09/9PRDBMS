@@ -1,0 +1,34 @@
+
+8. Design and implement a database with primary key and foreign key constraints. Perform:
+a) Alter table with add and modify b) Drop table
+
+-- Create Authors table
+CREATE TABLE Authors (
+    AuthorID INT PRIMARY KEY,
+    AuthorName VARCHAR(100)
+);
+
+-- Create Books table with a foreign key constraint
+CREATE TABLE Books (
+    BookID INT PRIMARY KEY,
+    Title VARCHAR(100),
+    AuthorID INT,
+    FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
+);
+
+
+-- Add a new column to the Books table
+ALTER TABLE Books
+ADD PublicationYear INT;
+
+-- Modify the data type of an existing column
+ALTER TABLE Authors
+MODIFY COLUMN AuthorName VARCHAR(150);
+
+
+-- Drop the Books table
+DROP TABLE Books;
+
+-- Drop the Authors table
+DROP TABLE Authors;
+
