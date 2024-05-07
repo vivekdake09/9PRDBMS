@@ -2,6 +2,11 @@
 Write a stored procedure to find department no.,dname & sum of salaries of respective
 department. Take department no. as input
 
+
+
+CREATE DATABASE PRACTICAL10;
+USE PRACTICAL10;
+
 -- Create Employee table
 CREATE TABLE Employee (
     fname VARCHAR(50),
