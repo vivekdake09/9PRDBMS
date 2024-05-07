@@ -1,0 +1,127 @@
+13. Consider following database:
+Write a trigger that will check whether the working hours of any employee are less than zero and
+if it less than zero then working hours should be updated to zero.
+
+
+-- Create Employee table
+CREATE TABLE Employee (
+    fname VARCHAR(50),
+    minit CHAR(1),
+    lname VARCHAR(50),
+    ssn CHAR(9) PRIMARY KEY,
+    bdate DATE,
+    address VARCHAR(100),
+    sex CHAR(1),
+    salary DECIMAL(10,2),
+    super_ssn CHAR(9),
+    dno INT
+);
+
+-- Insert sample data into Employee table
+INSERT INTO Employee (fname, minit, lname, ssn, bdate, address, sex, salary, super_ssn, dno)
+VALUES 
+('John', 'D', 'Doe', '123456789', '1990-05-10', '123 Main St', 'M', 50000.00, '987654321', 1),
+('Jane', 'M', 'Smith', '234567890', '1995-08-15', '456 Elm St', 'F', 60000.00, '987654321', 2),
+('Alice', 'R', 'Johnson', '345678901', '1988-03-20', '789 Oak St', 'F', 55000.00, '987654321', 3);
+
+-- Create Department table
+CREATE TABLE Department (
+    dname VARCHAR(50),
+    dnumber INT PRIMARY KEY,
+    mgr_ssn CHAR(9),
+    mgrstartdate DATE
+);
+
+-- Insert sample data into Department table
+INSERT INTO Department (dname, dnumber, mgr_ssn, mgrstartdate)
+VALUES 
+('HR', 1, '987654321', '2020-01-01'),
+('IT', 2, '987654321', '2020-01-01'),
+('Finance', 3, '987654321', '2020-01-01');
+
+-- Create DepLocations table
+CREATE TABLE DepLocations (
+    dnumber INT,
+    dlocation VARCHAR(100),
+    PRIMARY KEY (dnumber, dlocation)
+);
+
+-- Insert sample data into DepLocations table
+INSERT INTO DepLocations (dnumber, dlocation)
+VALUES 
+(1, 'New York'),
+(2, 'San Francisco'),
+(3, 'Chicago');
+
+-- Create Project table
+CREATE TABLE Project (
+    pname VARCHAR(50),
+    pnumber INT PRIMARY KEY,
+    plocation VARCHAR(100),
+    dnum INT
+);
+
+-- Insert sample data into Project table
+INSERT INTO Project (pname, pnumber, plocation, dnum)
+VALUES 
+('Project A', 1, 'New York', 1),
+('Project B', 2, 'San Francisco', 2),
+('Project C', 3, 'Chicago', 3);
+
+-- Create WorksOn table
+CREATE TABLE WorksOn (
+    essn CHAR(9),
+    pno INT,
+    hours DECIMAL(5,2),
+    FOREIGN KEY (essn) REFERENCES Employee(ssn),
+    FOREIGN KEY (pno) REFERENCES Project(pnumber),
+    PRIMARY KEY (essn, pno)
+);
+
+-- Insert sample data into WorksOn table
+INSERT INTO WorksOn (essn, pno, hours)
+VALUES 
+('123456789', 1, 40.0),
+('234567890', 2, 35.5),
+('345678901', 3, 45.0);
+
+-- Create Dependent table
+CREATE TABLE Dependent (
+    essn CHAR(9),
+    dependent_name VARCHAR(50),
+    sex CHAR(1),
+    bdate DATE,
+    relationship VARCHAR(50),
+    department_name VARCHAR(50),
+    FOREIGN KEY (essn) REFERENCES Employee(ssn)
+);
+
+-- Insert sample data into Dependent table
+INSERT INTO Dependent (essn, dependent_name, sex, bdate, relationship, department_name)
+VALUES 
+('123456789', 'Alice Doe', 'F', '2010-01-20', 'Child', 'HR'),
+('234567890', 'Bob Smith', 'M', '2015-05-15', 'Child', 'IT'),
+('345678901', 'Charlie Johnson', 'M', '2008-11-10', 'Child', 'Finance');
+
+-- Create trigger to check and update working hours if less than zero
+DELIMITER //
+
+CREATE TRIGGER UpdateWorkingHours BEFORE UPDATE ON WorksOn
+FOR EACH ROW
+BEGIN
+    IF NEW.hours < 0 THEN
+        SET NEW.hours = 0;
+    END IF;
+END//
+
+DELIMITER ;
+
+-- Let's update the working hours for an employee
+UPDATE WorksOn
+SET hours = -5
+WHERE essn = '123456789' AND pno = 1;
+
+-- Check if the hours are updated
+SELECT *
+FROM WorksOn
+WHERE essn = '123456789' AND pno = 1;
