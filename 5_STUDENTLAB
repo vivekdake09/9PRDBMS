@@ -16,6 +16,11 @@ h) How many students class wise have allocated machines in the labs
 i) Create a view which lists out the stud_no, stud_name, mach_no, lab_no, dayofweek
 j) Create a view which lists the machine allotment details for “Thursday”.
 
+
+
+CREATE DATABASE PRACTICAL5;
+USE PRACTICAL5;
+
 -- a) Create tables with appropriate integrity constraints
 CREATE TABLE Student (
     stud_no INTEGER PRIMARY KEY,
