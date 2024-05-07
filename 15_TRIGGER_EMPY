@@ -1,3 +1,13 @@
+
+15. Database Schema for a Employee-pay scenario
+employee(emp_id : integer, emp_name: string)
+department(dept_id: integer, dept_name:string)
+paydetails(emp_id : integer, dept_id: integer, salary: integer, DOJ: date)
+16. payroll(emp_id : integer, pay_date: date)
+Write a trigger which will restrict insertion of new employee record having salary less than Rs.
+20000.
+
+
 CREATE DATABASE PRAC15;
 USE PRAC15;
 
