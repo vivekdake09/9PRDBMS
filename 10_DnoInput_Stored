@@ -1,3 +1,7 @@
+10. Consider the following database:
+Write a stored procedure to find department no.,dname & sum of salaries of respective
+department. Take department no. as input
+
 -- Create Employee table
 CREATE TABLE Employee (
     fname VARCHAR(50),
