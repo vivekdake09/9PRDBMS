@@ -10,7 +10,8 @@ If 50000<= salary< 75000 then increment salary by 3000
 Else then increment salary by 1500
 
 
-
+CREATE DATABASE PRAC16;
+USE PRAC16;
 CREATE TABLE employee (
     emp_id INTEGER PRIMARY KEY,
     emp_name VARCHAR(255) NOT NULL
