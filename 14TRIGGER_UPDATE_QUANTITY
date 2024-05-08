@@ -62,6 +62,7 @@ INSERT INTO Iss_rec (Iss_no, Iss_date, Mem_no, Book_no) VALUES
 (304, '2024-05-04', 104, 204),
 (305, '2024-05-05', 105, 205);
 
+ALTER TABLE Book ADD COLUMN quantity INTEGER DEFAULT 0;
 
 
 DELIMITER //
