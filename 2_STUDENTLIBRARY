@@ -93,8 +93,8 @@ INSERT INTO Iss_rec (iss_no, iss_date, Mem_no, book_no) VALUES
 (306, '2024-04-30', 106, 206),
 (307, '2024-04-30', 107, 207),
 (308, '2024-04-30', 108, 208),
-(309, '2024-04-30', 109, 209),
-(310, '2024-04-30', 110, 210);
+(309, '2024-05-09', 109, 209),
+(310, '2024-05-10', 110, 210);
 
 
 b) List all the student names with their membership numbers
