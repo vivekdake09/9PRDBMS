@@ -166,4 +166,4 @@ INNER JOIN Customer c ON m.cust_no = c.cust_no
 INNER JOIN Cassette cas ON ir.cass_no = cas.cass_no
 WHERE ir.iss_date >= CURDATE() - INTERVAL 7 DAY;
 
-
+SELECT * FROM weekly_issue_view;
