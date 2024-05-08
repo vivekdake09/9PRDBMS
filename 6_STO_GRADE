@@ -14,7 +14,7 @@ CREATE TABLE students (
     subject5 INT
 );
 
--DELIMITER //
+DELIMITER //
 
 CREATE FUNCTION calculate_grade(student_roll_no INT) RETURNS CHAR DETERMINISTIC
 BEGIN
