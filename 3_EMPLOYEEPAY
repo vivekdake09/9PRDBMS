@@ -159,3 +159,4 @@ SELECT emp_name, (basic + additions - deductions) AS net_salary
 FROM employee
 INNER JOIN paydetails ON employee.emp_id = paydetails.emp_id;
 
+SELECT * FROM employee_net_salary_view;
