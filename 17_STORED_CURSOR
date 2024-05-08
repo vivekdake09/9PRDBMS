@@ -54,8 +54,8 @@ BEGIN
     
 END//
 
+DELIMITER ;
+
 CALL ReducePriceOfFirstEditionBooks();
 SELECT * FROM ReducedPriceBooks;
-
-DELIMITER ;
 
