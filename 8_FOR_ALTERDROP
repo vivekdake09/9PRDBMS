@@ -8,33 +8,34 @@ a) Alter table with add and modify b) Drop table
 CREATE DATABASE PRACTICAL8;
 USE PRACTICAL8;
 
--- Create Authors table
-CREATE TABLE Authors (
-    AuthorID INT PRIMARY KEY,
-    AuthorName VARCHAR(100)
+-- Create Department table
+CREATE TABLE Department (
+    department_id INT PRIMARY KEY,
+    department_name VARCHAR(255)
 );
 
--- Create Books table with a foreign key constraint
-CREATE TABLE Books (
-    BookID INT PRIMARY KEY,
-    Title VARCHAR(100),
-    AuthorID INT,
-    FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
+-- Create Employee table with foreign key constraint
+CREATE TABLE Employee (
+    employee_id INT PRIMARY KEY,
+    employee_name VARCHAR(255),
+    department_id INT,
+    FOREIGN KEY (department_id) REFERENCES Department(department_id)
 );
 
+-- Insert into Department
+INSERT INTO Department (department_id, department_name)
+VALUES (1, 'Engineering'),
+       (2, 'Marketing');
 
--- Add a new column to the Books table
-ALTER TABLE Books
-ADD PublicationYear INT;
-
--- Modify the data type of an existing column
-ALTER TABLE Authors
-MODIFY COLUMN AuthorName VARCHAR(150);
+-- Insert into Employee
+INSERT INTO Employee (employee_id, employee_name, department_id)
+VALUES (1, 'John Doe', 1),
+       (2, 'Jane Smith', 2);
 
 
--- Drop the Books table
-DROP TABLE Books;
+ALTER TABLE Employee
+ADD COLUMN salary DECIMAL(10,2);
+ALTER TABLE Employee
+MODIFY COLUMN employee_name VARCHAR(100);
 
--- Drop the Authors table
-DROP TABLE Authors;
-
+DROP TABLE Employee;
