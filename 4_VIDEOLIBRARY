@@ -97,8 +97,8 @@ INSERT INTO Iss_rec (iss_no, iss_date, mem_no, cass_no) VALUES
 (6, '2024-04-30', 6, 6),
 (7, '2024-04-30', 7, 7),
 (8, '2024-04-30', 8, 8),
-(9, '2024-04-30', 9, 9),
-(10, '2024-04-30', 10, 10);
+(9, '2024-05-09', 9, 9),
+(10, '2024-05-10', 10, 10);
 
 
 c) List all the customer names with their membership numbers
