@@ -1,7 +1,5 @@
-17.17.Write a stored procedure using cursor to reduce price by Rs. 50 of 1st edition of all
+17.Write a stored procedure using cursor to reduce price by Rs. 50 of 1st edition of all
 books and store ISBN,Title and reduced price in new table
-
-
 
 
 CREATE DATABASE PRAC17;
@@ -55,6 +53,9 @@ BEGIN
     CLOSE cur;
     
 END//
+
+CALL ReducePriceOfFirstEditionBooks();
+SELECT * FROM ReducedPriceBooks;
 
 DELIMITER ;
 
