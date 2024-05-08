@@ -4,6 +4,14 @@ books and store ISBN,Title and reduced price in new table
 
 CREATE DATABASE PRAC17;
 USE PRAC17;
+
+CREATE TABLE Books (
+    ISBN VARCHAR(20) PRIMARY KEY,
+    Title VARCHAR(100) NOT NULL,
+    Price DECIMAL(10, 2) NOT NULL,
+    Edition INT NOT NULL
+);
+
 DELIMITER //
 
 CREATE PROCEDURE ReducePriceOfFirstEditionBooks()
