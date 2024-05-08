@@ -77,3 +77,7 @@ END//
 
 DELIMITER ;
 
+INSERT INTO Iss_rec (Iss_no, Iss_date, Mem_no, Book_no) VALUES
+(306, '2024-05-06', 101, 201);
+
+SELECT Quantity FROM Book WHERE Book_no = 201;
