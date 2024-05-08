@@ -132,3 +132,9 @@ BEGIN
 END//
 
 DELIMITER ;
+
+-- Execute the procedure using cursor
+CALL update_salary();
+
+-- Now let's check the updated salaries
+SELECT * FROM paydetails;
