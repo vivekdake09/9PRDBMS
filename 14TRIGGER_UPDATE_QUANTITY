@@ -21,7 +21,8 @@ CREATE TABLE Membership (
 CREATE TABLE Book (
     Book_no INTEGER PRIMARY KEY,
     Book_name VARCHAR(100) NOT NULL,
-    Author VARCHAR(50) NOT NULL
+    Author VARCHAR(50) NOT NULL,
+    Quantity INTEGER
 );
 
 CREATE TABLE Iss_rec (
@@ -48,12 +49,12 @@ INSERT INTO Membership (Mem_no, Stud_no) VALUES
 (104, 4),
 (105, 5);
 
-INSERT INTO Book (Book_no, Book_name, Author) VALUES
-(201, 'To Kill a Mockingbird', 'Harper Lee'),
-(202, '1984', 'George Orwell'),
-(203, 'The Great Gatsby', 'F. Scott Fitzgerald'),
-(204, 'Pride and Prejudice', 'Jane Austen'),
-(205, 'The Catcher in the Rye', 'J.D. Salinger');
+INSERT INTO Book (Book_no, Book_name, Author, Quantity) VALUES
+(201, 'To Kill a Mockingbird', 'Harper Lee', 2),
+(202, '1984', 'George Orwell', 3),
+(203, 'The Great Gatsby', 'F. Scott Fitzgerald', 4),
+(204, 'Pride and Prejudice', 'Jane Austen', 5),
+(205, 'The Catcher in the Rye', 'J.D. Salinger', 6);
 
 INSERT INTO Iss_rec (Iss_no, Iss_date, Mem_no, Book_no) VALUES
 (301, '2024-05-01', 101, 201),
@@ -61,8 +62,6 @@ INSERT INTO Iss_rec (Iss_no, Iss_date, Mem_no, Book_no) VALUES
 (303, '2024-05-03', 103, 203),
 (304, '2024-05-04', 104, 204),
 (305, '2024-05-05', 105, 205);
-
-ALTER TABLE Book ADD COLUMN quantity INTEGER DEFAULT 0;
 
 
 DELIMITER //
