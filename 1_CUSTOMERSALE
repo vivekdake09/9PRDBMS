@@ -144,3 +144,4 @@ FROM Sale s
 JOIN Item i ON s.item_id = i.item_id;
 
 
+SELECT * FROM BillDetails;
