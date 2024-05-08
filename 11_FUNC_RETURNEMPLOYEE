@@ -101,10 +101,10 @@ VALUES
 
 
 
--- Function to get the number of employees working in a department
 DELIMITER //
 CREATE FUNCTION GetEmployeesInDepartment(department_number INT)
 RETURNS INT
+DETERMINISTIC
 BEGIN
     DECLARE employee_count INT;
     
@@ -115,6 +115,7 @@ BEGIN
     RETURN employee_count;
 END//
 DELIMITER ;
+
 
 
 SELECT GetEmployeesInDepartment(1);
