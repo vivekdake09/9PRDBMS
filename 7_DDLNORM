@@ -4,35 +4,33 @@
 CREATE DATABASE PRACTICAL7;
 USE PRACTICAL7;
 
-CREATE TABLE Books (
-    ISBN VARCHAR(20) PRIMARY KEY,
-    Title VARCHAR(100),
-    Author_ID INT,
-    Publisher_ID INT,
-    Genre VARCHAR(50),
-    Publication_Year INT,
-    FOREIGN KEY (Author_ID) REFERENCES Authors(Author_ID),
-    FOREIGN KEY (Publisher_ID) REFERENCES Publishers(Publisher_ID)
-);
-
 CREATE TABLE Authors (
-    Author_ID INT PRIMARY KEY,
-    Author_Name VARCHAR(100)
+    author_id INT AUTO_INCREMENT PRIMARY KEY,
+    author_name VARCHAR(100) NOT NULL
 );
 
-
-CREATE TABLE Publishers (
-    Publisher_ID INT PRIMARY KEY,
-    Publisher_Name VARCHAR(100)
+CREATE TABLE Books (
+    book_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    author_id INT,
+    genre VARCHAR(50),
+    publication_year INT,
+    FOREIGN KEY (author_id) REFERENCES Authors(author_id)
 );
+-- Inserting authors
+INSERT INTO Authors (author_name) VALUES ('J.K. Rowling');
+INSERT INTO Authors (author_name) VALUES ('George Orwell');
+INSERT INTO Authors (author_name) VALUES ('Harper Lee');
 
+-- Inserting books
+INSERT INTO Books (title, author_id, genre, publication_year) VALUES ('Harry Potter and the Philosopher''s Stone', 1, 'Fantasy', 1997);
+INSERT INTO Books (title, author_id, genre, publication_year) VALUES ('1984', 2, 'Dystopian Fiction', 1949);
+INSERT INTO Books (title, author_id, genre, publication_year) VALUES ('To Kill a Mockingbird', 3, 'Southern Gothic', 1960);
 
-CREATE TABLE Members (
-    Member_ID INT PRIMARY KEY,
-    Member_Name VARCHAR(100),
-    Email VARCHAR(100),
-    Phone_Number VARCHAR(20)
-);
+-- Retrieve all books and their authors
+SELECT Books.title, Authors.author_name
+FROM Books
+JOIN Authors ON Books.author_id = Authors.author_id;
 
 
 /*DONT RUN THIS:
