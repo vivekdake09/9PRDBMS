@@ -143,3 +143,6 @@ JOIN Allotment a ON s.stud_no = a.Stud_no
 JOIN Lab l ON a.mach_no = l.mach_no
 WHERE a.dayofweek = 'Thursday';
 
+SELECT * FROM StudentMachineAllotments;
+SELECT * FROM ThursdayMachineAllotments;
+
