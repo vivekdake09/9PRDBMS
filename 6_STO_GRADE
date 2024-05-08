@@ -4,7 +4,8 @@ stored function which will take student roll no as input and will calculate grad
 CREATE DATABASE PRACTICAL6;
 USE PRACTICAL6;
 
-CREATE TABLE students (
+-- Step 1: Create the table to store student details
+CREATE TABLE student_details (
     roll_no INT PRIMARY KEY,
     name VARCHAR(50),
     subject1 INT,
@@ -14,29 +15,35 @@ CREATE TABLE students (
     subject5 INT
 );
 
-DELIMITER //
+-- Step 2: Insert sample data into the table
+INSERT INTO student_details (roll_no, name, subject1, subject2, subject3, subject4, subject5)
+VALUES
+    (1, 'John', 80, 75, 85, 90, 88),
+    (2, 'Alice', 70, 65, 75, 80, 78),
+    (3, 'Bob', 85, 90, 88, 92, 87);
 
-CREATE FUNCTION calculate_grade(student_roll_no INT) RETURNS CHAR DETERMINISTIC
+-- Step 3: Write a stored function to calculate the grade
+DELIMITER //
+CREATE FUNCTION calculate_grade(student_roll INT) RETURNS VARCHAR(10)
+DETERMINISTIC
+READS SQL DATA
 BEGIN
-    DECLARE total_marks INT;
-    DECLARE average_marks FLOAT;
-    DECLARE grade CHAR;
+    DECLARE avg_marks FLOAT;
+    DECLARE grade VARCHAR(10);
     
-    SELECT (subject1 + subject2 + subject3 + subject4 + subject5) INTO total_marks FROM students WHERE roll_no = student_roll_no;
+    -- Calculate average marks
+    SELECT AVG((subject1 + subject2 + subject3 + subject4 + subject5) / 5) INTO avg_marks
+    FROM student_details
+    WHERE roll_no = student_roll;
     
-    IF total_marks IS NULL THEN
-        RETURN 'Student not found';
-    END IF;
-    
-    SET average_marks = total_marks / 5;
-    
-    IF average_marks >= 90 THEN
+    -- Assign grade based on average marks
+    IF avg_marks >= 90 THEN
         SET grade = 'A';
-    ELSEIF average_marks >= 80 THEN
+    ELSEIF avg_marks >= 80 THEN
         SET grade = 'B';
-    ELSEIF average_marks >= 70 THEN
+    ELSEIF avg_marks >= 70 THEN
         SET grade = 'C';
-    ELSEIF average_marks >= 60 THEN
+    ELSEIF avg_marks >= 60 THEN
         SET grade = 'D';
     ELSE
         SET grade = 'F';
@@ -44,5 +51,6 @@ BEGIN
     
     RETURN grade;
 END //
-
 DELIMITER ;
+-- Call the function to calculate the grade for a specific student
+SELECT calculate_grade(1); -- Example: Calculate grade for student with roll number 1
