@@ -12,6 +12,13 @@ CREATE TABLE Books (
     Edition INT NOT NULL
 );
 
+INSERT INTO Books (ISBN, Title, Price, Edition) VALUES
+('978-0061120084', 'To Kill a Mockingbird', 250.00, 1),
+('978-0451524935', '1984', 180.00, 1),
+('978-0743273565', 'The Great Gatsby', 200.00, 1),
+('978-1612930845', 'Pride and Prejudice', 150.00, 1),
+('978-0316769488', 'The Catcher in the Rye', 220.00, 1);
+
 DELIMITER //
 
 CREATE PROCEDURE ReducePriceOfFirstEditionBooks()
