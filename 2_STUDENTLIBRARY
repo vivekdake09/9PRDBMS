@@ -153,3 +153,5 @@ SELECT i.*
 FROM Iss_rec i
 WHERE i.iss_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 1 WEEK) AND CURDATE();
 
+SELECT * FROM Last_Week_Issues;
+
